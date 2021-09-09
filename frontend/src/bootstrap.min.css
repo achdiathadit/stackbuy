@@ -4552,8 +4552,14 @@ fieldset:disabled .btn {
 .card-link + .card-link {
 	margin-left: 1rem;
 }
+.card-product {
+	position: relative;
+  top: 0;
+	transition: top 0.2s ease;
+}
 .card-product:hover {
 	box-shadow: 0 3px 5px rgba(33, 33, 33, 0.2);
+	top: -5px;
 	cursor: pointer;
 }
 .card-header {
