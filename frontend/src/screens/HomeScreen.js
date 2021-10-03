@@ -4,30 +4,28 @@ import Product from '../components/Product';
 import axios from 'axios';
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
+	const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
+	useEffect(() => {
+		const fetchProducts = async () => {
+			const { data } = await axios.get('/api/products');
 
-      setProducts(data);
-    };
-    fetchProducts();
-  }, []);
-  return (
-    <>
-      <h4>
-        <strong>Latest Products</strong>
-      </h4>
-      <Row>
-        {products.map(product => (
-          <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
-    </>
-  );
+			setProducts(data);
+		};
+		fetchProducts();
+	}, []);
+	return (
+		<>
+			<h5>Latest Products</h5>
+			<Row>
+				{products.map((product) => (
+					<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+						<Product product={product} />
+					</Col>
+				))}
+			</Row>
+		</>
+	);
 };
 
 export default HomeScreen;

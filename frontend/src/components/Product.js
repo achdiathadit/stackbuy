@@ -4,14 +4,15 @@ import { Card } from 'react-bootstrap';
 import Rating from './Rating';
 
 const Product = ({ product }) => {
+	console.log(product);
 	return (
 		<LinkContainer to={`/product/${product._id}`}>
-			<Card className='card card-product border-light my-3 p-3 rounded'>
-				<Card.Img src={product.image} variant='top' />
+			<Card className='card card-product border-light my-3 p-3 rounded-4'>
+				<Card.Img src={product.image} />
 
 				<Card.Body>
 					<Card.Title as='div' className='card-title'>
-						<strong>{product.name}</strong>
+						{product.name}
 					</Card.Title>
 
 					<Card.Text as='div'>

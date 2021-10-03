@@ -4554,7 +4554,7 @@ fieldset:disabled .btn {
 }
 .card-product {
 	position: relative;
-  top: 0;
+	top: 0;
 	transition: top 0.2s ease;
 }
 .card-product:hover {
@@ -4605,8 +4605,9 @@ fieldset:disabled .btn {
 }
 .card-img,
 .card-img-top {
-	border-top-left-radius: calc(0.25rem - 1px);
-	border-top-right-radius: calc(0.25rem - 1px);
+	/* border-top-left-radius: calc(0.25rem - 1px);
+	border-top-right-radius: calc(0.25rem - 1px); */
+	border-radius: calc(0.25rem - 1px);
 }
 .card-img,
 .card-img-bottom {
@@ -7680,6 +7681,9 @@ fieldset:disabled .btn {
 .rounded-3 {
 	border-radius: 0.3rem !important;
 }
+.rounded-4 {
+	border-radius: 0.5rem !important;
+}
 .rounded-circle {
 	border-radius: 50% !important;
 }
@@ -10506,7 +10510,7 @@ fieldset:disabled .btn {
 	background-image: linear-gradient(#f2f2f2, #eee 50%, #dbdbdb);
 	-webkit-filter: none;
 	filter: none;
-	border: 1px solid #bebebe;
+	/* border: 1px solid #bebebe; */
 }
 .navbar.bg-dark {
 	background-image: linear-gradient(#646464, #333 50%, #2f2f2f);
