@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
 	Row,
@@ -10,82 +11,87 @@ import {
 	ListGroupItem,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import axios from 'axios';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { listProductDetails } from '../actions/productActions';
 
 const ProductScreen = ({ match }) => {
-	const [product, setProduct] = useState({});
+	const dispatch = useDispatch();
+
+	const productDetails = useSelector((state) => state.productDetails);
+	const { loading, error, product } = productDetails;
 
 	useEffect(() => {
-		const fetchProduct = async () => {
-			const { data } = await axios.get(`/api/products/${match.params.id}`);
-
-			setProduct(data);
-		};
-
-		fetchProduct();
-	}, [match]);
+		dispatch(listProductDetails(match.params.id));
+	}, [dispatch, match]);
 
 	return (
 		<>
 			<Link to='/'>
 				<Button className='btn-light my-3'>Go back</Button>
 			</Link>
-			<Row>
-				<Col md={6}>
-					<Image src={product.image} alt={product.name} fluid rounded />
-				</Col>
-				<Col md={3}>
-					<ListGroup variant='flush'>
-						<ListGroupItem>
-							<h3>{product.name}</h3>
-						</ListGroupItem>
-						<ListGroupItem>
-							<Rating
-								value={product.rating}
-								text={`${product.numReviews} reviews`}
-							/>
-						</ListGroupItem>
-						<ListGroupItem>
-							<strong>Price:</strong> ${product.price}
-						</ListGroupItem>
-						<ListGroupItem>
-							<strong>Description:</strong> {product.description}
-						</ListGroupItem>
-					</ListGroup>
-				</Col>
-				<Col md={3}>
-					<Card>
+			{loading ? (
+				<Loader />
+			) : error ? (
+				<Message variant='danger'>{error}</Message>
+			) : (
+				<Row>
+					<Col md={6}>
+						<Image src={product.image} alt={product.name} fluid rounded />
+					</Col>
+					<Col md={3}>
 						<ListGroup variant='flush'>
 							<ListGroupItem>
-								<Row>
-									<Col>Price:</Col>
-									<Col>
-										<strong>${product.price}</strong>
-									</Col>
-								</Row>
+								<h3>{product.name}</h3>
 							</ListGroupItem>
 							<ListGroupItem>
-								<Row>
-									<Col>Status:</Col>
-									<Col>
-										<strong>
-											{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-										</strong>
-									</Col>
-								</Row>
+								<Rating
+									value={product.rating}
+									text={`${product.numReviews} reviews`}
+								/>
 							</ListGroupItem>
 							<ListGroupItem>
-								<Button
-									className='btn-dark w-100'
-									disabled={product.countInStock === 0}
-								>
-									Add to Cart
-								</Button>
+								<strong>Price:</strong> ${product.price}
+							</ListGroupItem>
+							<ListGroupItem>
+								<strong>Description:</strong> {product.description}
 							</ListGroupItem>
 						</ListGroup>
-					</Card>
-				</Col>
-			</Row>
+					</Col>
+					<Col md={3}>
+						<Card>
+							<ListGroup variant='flush'>
+								<ListGroupItem>
+									<Row>
+										<Col>Price:</Col>
+										<Col>
+											<strong>${product.price}</strong>
+										</Col>
+									</Row>
+								</ListGroupItem>
+								<ListGroupItem>
+									<Row>
+										<Col>Status:</Col>
+										<Col>
+											<strong>
+												{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+											</strong>
+										</Col>
+									</Row>
+								</ListGroupItem>
+								<ListGroupItem>
+									<Button
+										className='btn-dark w-100'
+										disabled={product.countInStock === 0}
+									>
+										Add to Cart
+									</Button>
+								</ListGroupItem>
+							</ListGroup>
+						</Card>
+					</Col>
+				</Row>
+			)}
 		</>
 	);
 };
