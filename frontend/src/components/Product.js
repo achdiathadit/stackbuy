@@ -4,7 +4,6 @@ import { Card } from 'react-bootstrap';
 import Rating from './Rating';
 
 const Product = ({ product }) => {
-	console.log(product);
 	return (
 		<LinkContainer to={`/product/${product._id}`}>
 			<Card className='card card-product border-light my-3 p-3 rounded-4'>
