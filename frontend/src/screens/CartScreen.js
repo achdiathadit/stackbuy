@@ -43,7 +43,10 @@ const CartScreen = ({ match, location, history }) => {
 				<h5>Shopping Cart</h5>
 				{cartItems.length === 0 ? (
 					<Message>
-						Your cart is empty <Link to='/'>Go back</Link>
+						Your cart is empty{' '}
+						<Link to='/'>
+							<Button className='btn-primary'>Go back</Button>
+						</Link>
 					</Message>
 				) : (
 					<ListGroup variant='flush'>
@@ -51,12 +54,12 @@ const CartScreen = ({ match, location, history }) => {
 							<ListGroupItem key={item.product}>
 								<Row>
 									<Col md={2}>
-										<Image src={item.image} alt={item.name} fluid rounder />
+										<Image src={item.image} alt={item.name} fluid rounded />
 									</Col>
 									<Col md={3}>
 										<Link to={`/product/${item.product}`}>{item.name}</Link>
 									</Col>
-									<Col md={2}>${item.price}</Col>
+									<Col md={2}>${item.price.toLocaleString()}</Col>
 									<Col md={2}>
 										<FormControl
 											className='form-select'
@@ -95,14 +98,18 @@ const CartScreen = ({ match, location, history }) => {
 					<ListGroup variant='flush'>
 						<ListGroupItem>
 							<h5>
-								Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-								items
+								Subtotal (
+								{cartItems.reduce(
+									(acc, item) => parseInt(acc) + parseInt(item.qty),
+									0
+								)}
+								) items
 							</h5>
 							<strong>
 								$
 								{cartItems
 									.reduce((acc, item) => acc + item.qty * item.price, 0)
-									.toFixed(2)}
+									.toLocaleString()}
 							</strong>
 						</ListGroupItem>
 						<ListGroupItem>

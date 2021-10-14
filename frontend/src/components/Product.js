@@ -21,7 +21,7 @@ const Product = ({ product }) => {
 						></Rating>
 					</Card.Text>
 
-					<Card.Text as='h5'>${product.price}</Card.Text>
+					<Card.Text as='h5'>${product.price.toLocaleString()}</Card.Text>
 				</Card.Body>
 			</Card>
 		</LinkContainer>
