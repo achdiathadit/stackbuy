@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { logout } from '../actions/userActions';
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const Header = () => {
 	const { userInfo } = userLogin;
 
 	const logoutHandler = () => {
-		console.log('logout');
+		dispatch(logout());
 	};
 
 	return (
@@ -32,7 +33,7 @@ const Header = () => {
 									<i className='fas fa-shopping-basket' /> Cart
 								</Nav.Link>
 							</LinkContainer>
-							{userInfo !== null ? (
+							{userInfo ? (
 								<NavDropdown title={userInfo.name} id='username'>
 									<LinkContainer to='/profile'>
 										<NavDropdown.Item>Profile</NavDropdown.Item>
