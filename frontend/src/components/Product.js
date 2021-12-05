@@ -10,7 +10,13 @@ const Product = ({ product }) => {
 				<Card.Img src={product.image} />
 
 				<Card.Body>
-					<Card.Title as='div' className='card-title'>
+					<Card.Title
+						as='div'
+						className='card-title'
+						data-bs-toggle='tooltip'
+						data-bs-placement='bottom'
+						title={product.name}
+					>
 						{product.name}
 					</Card.Title>
 

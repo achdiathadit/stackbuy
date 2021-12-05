@@ -4550,6 +4550,9 @@ fieldset:disabled .btn {
 }
 .card-title {
 	margin-bottom: 0.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .card-subtitle {
 	margin-top: -0.25rem;
