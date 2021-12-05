@@ -19,7 +19,7 @@ const Header = () => {
 			<Navbar variant='light' bg='light' expand='lg' collapseOnSelect>
 				<Container>
 					<LinkContainer to='/'>
-						<Navbar.Brand>Stackbuy</Navbar.Brand>
+						<Navbar.Brand className='brand fs-2'>stackbuy</Navbar.Brand>
 					</LinkContainer>
 
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
