@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userContants';
 
 const ProfileScreen = ({ location, history }) => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [profileUpdated, setProfileUpdated] = useState(false);
 	const [message, setMessage] = useState(null);
 
 	const dispatch = useDispatch();
@@ -27,17 +29,24 @@ const ProfileScreen = ({ location, history }) => {
 		if (!userInfo) {
 			history.push('/login');
 		} else {
-			if (!user.name) {
+			if (!user || !user.name) {
 				dispatch(getUserDetails('profile'));
+			} else if (success) {
+				dispatch({ type: USER_UPDATE_PROFILE_RESET });
+				dispatch(getUserDetails('profile'));
+				setProfileUpdated(true);
 			} else {
 				setName(user.name);
 				setEmail(user.email);
 			}
 		}
-	}, [dispatch, history, userInfo, user]);
+	}, [dispatch, history, userInfo, user, success]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+		setProfileUpdated(false);
+		setMessage(null);
+
 		if (password !== confirmPassword) {
 			setMessage(`Password doesn't match`);
 		} else {
@@ -50,12 +59,12 @@ const ProfileScreen = ({ location, history }) => {
 			<Col md={3}>
 				<h5>User Profile</h5>
 				{message && <Message variant='danger'>{message}</Message>}
-				{error && <Message variant='danger'>{error}</Message>}
-				{success && (
+				{profileUpdated && (
 					<Message variant='success'>
 						Profile has been successfully updated
 					</Message>
 				)}
+				{error && <Message variant='danger'>{error}</Message>}
 				{loading && <Loader />}
 				<Form onSubmit={submitHandler} className='my-2'>
 					<Form.Group controlId='name'>
