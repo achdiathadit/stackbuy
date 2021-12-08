@@ -7,7 +7,6 @@ import {
 	ListGroup,
 	Image,
 	Button,
-	Card,
 	ListGroupItem,
 	FormControl,
 } from 'react-bootstrap';
@@ -94,36 +93,34 @@ const CartScreen = ({ match, location, history }) => {
 				)}
 			</Col>
 			<Col md={4}>
-				<Card>
-					<ListGroup variant='flush'>
-						<ListGroupItem>
-							<h5>
-								Subtotal (
-								{cartItems.reduce(
-									(acc, item) => parseInt(acc) + parseInt(item.qty),
-									0
-								)}
-								) items
-							</h5>
-							<strong>
-								$
-								{cartItems
-									.reduce((acc, item) => acc + item.qty * item.price, 0)
-									.toLocaleString()}
-							</strong>
-						</ListGroupItem>
-						<ListGroupItem>
-							<Button
-								type='button'
-								className='btn-dark w-100'
-								disabled={cartItems.length === 0}
-								onClick={checkoutHandler}
-							>
-								Proceed to Checkout
-							</Button>
-						</ListGroupItem>
-					</ListGroup>
-				</Card>
+				<ListGroup>
+					<ListGroupItem>
+						<h5>
+							Subtotal (
+							{cartItems.reduce(
+								(acc, item) => parseInt(acc) + parseInt(item.qty),
+								0
+							)}
+							) items
+						</h5>
+						<strong>
+							$
+							{cartItems
+								.reduce((acc, item) => acc + item.qty * item.price, 0)
+								.toLocaleString()}
+						</strong>
+					</ListGroupItem>
+					<ListGroupItem>
+						<Button
+							type='button'
+							className='btn-dark w-100'
+							disabled={cartItems.length === 0}
+							onClick={checkoutHandler}
+						>
+							Proceed to Checkout
+						</Button>
+					</ListGroupItem>
+				</ListGroup>
 			</Col>
 		</Row>
 	);

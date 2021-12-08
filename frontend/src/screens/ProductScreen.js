@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import {
 	Row,
 	Col,
-	Card,
 	Image,
 	ListGroup,
 	Button,
@@ -69,58 +68,56 @@ const ProductScreen = ({ history, match }) => {
 						</ListGroup>
 					</Col>
 					<Col md={3}>
-						<Card>
-							<ListGroup variant='flush'>
+						<ListGroup>
+							<ListGroupItem>
+								<Row>
+									<Col>Price:</Col>
+									<Col>
+										<strong>${product.price}</strong>
+									</Col>
+								</Row>
+							</ListGroupItem>
+							<ListGroupItem>
+								<Row>
+									<Col>Status:</Col>
+									<Col>
+										<strong>
+											{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+										</strong>
+									</Col>
+								</Row>
+							</ListGroupItem>
+							{product.countInStock > 0 && (
 								<ListGroupItem>
 									<Row>
-										<Col>Price:</Col>
+										<Col>Qty:</Col>
 										<Col>
-											<strong>${product.price}</strong>
+											<FormControl
+												className='form-select'
+												as='select'
+												value={qty}
+												onChange={(e) => setQty(e.target.value)}
+											>
+												{[...Array(product.countInStock).keys()].map((x) => (
+													<option key={x + 1} value={x + 1}>
+														{x + 1}
+													</option>
+												))}
+											</FormControl>
 										</Col>
 									</Row>
 								</ListGroupItem>
-								<ListGroupItem>
-									<Row>
-										<Col>Status:</Col>
-										<Col>
-											<strong>
-												{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-											</strong>
-										</Col>
-									</Row>
-								</ListGroupItem>
-								{product.countInStock > 0 && (
-									<ListGroupItem>
-										<Row>
-											<Col>Qty:</Col>
-											<Col>
-												<FormControl
-													className='form-select'
-													as='select'
-													value={qty}
-													onChange={(e) => setQty(e.target.value)}
-												>
-													{[...Array(product.countInStock).keys()].map((x) => (
-														<option key={x + 1} value={x + 1}>
-															{x + 1}
-														</option>
-													))}
-												</FormControl>
-											</Col>
-										</Row>
-									</ListGroupItem>
-								)}
-								<ListGroupItem>
-									<Button
-										onClick={addToCartHandler}
-										className='btn-dark w-100'
-										disabled={product.countInStock === 0}
-									>
-										Add to Cart
-									</Button>
-								</ListGroupItem>
-							</ListGroup>
-						</Card>
+							)}
+							<ListGroupItem>
+								<Button
+									onClick={addToCartHandler}
+									className='btn-dark w-100'
+									disabled={product.countInStock === 0}
+								>
+									Add to Cart
+								</Button>
+							</ListGroupItem>
+						</ListGroup>
 					</Col>
 				</Row>
 			)}
