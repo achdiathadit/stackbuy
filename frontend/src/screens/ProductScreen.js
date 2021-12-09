@@ -15,6 +15,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { listProductDetails } from '../actions/productActions';
 import { addToCart } from '../actions/cartActions';
+import { formatUSD } from '../helper/formatCurrencyHelper';
 
 const ProductScreen = ({ history, match }) => {
 	const productId = match.params.id;
@@ -60,7 +61,7 @@ const ProductScreen = ({ history, match }) => {
 								/>
 							</ListGroupItem>
 							<ListGroupItem>
-								<strong>Price:</strong> ${product.price}
+								<strong>Price:</strong> {formatUSD(product.price)}
 							</ListGroupItem>
 							<ListGroupItem>
 								<strong>Description:</strong> {product.description}
@@ -73,7 +74,7 @@ const ProductScreen = ({ history, match }) => {
 								<Row>
 									<Col>Price:</Col>
 									<Col>
-										<strong>${product.price}</strong>
+										<strong>{formatUSD(product.price)}</strong>
 									</Col>
 								</Row>
 							</ListGroupItem>

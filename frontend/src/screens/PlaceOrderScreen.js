@@ -4,20 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
+import { formatUSD } from '../helper/formatCurrencyHelper';
 
 const PlaceOrderScreen = () => {
 	const cart = useSelector((state) => state.cart);
 
-	cart.itemsPrice = cart.cartItems
-		.reduce((acc, item) => acc + item.price * item.qty, 0)
-		.toFixed(2);
-	cart.shippingPrice = (cart.itemsPrice > 100 ? 0 : 100).toFixed(2);
-	cart.taxPrice = (0.15 * cart.itemsPrice).toFixed(2);
-	cart.totalPrice = (
+	cart.itemsPrice = cart.cartItems.reduce(
+		(acc, item) => acc + item.price * item.qty,
+		0
+	);
+	cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100;
+	cart.taxPrice = 0.15 * cart.itemsPrice;
+	cart.totalPrice =
 		Number(cart.itemsPrice) +
 		Number(cart.shippingPrice) +
-		Number(cart.taxPrice)
-	).toFixed(2);
+		Number(cart.taxPrice);
 
 	const placeOrderHandler = () => {
 		console.log('order');
@@ -68,9 +69,9 @@ const PlaceOrderScreen = () => {
 													</Link>
 												</Col>
 												<Col md={2}>
-													{item.qty} x ${item.price}
+													{item.qty} x {formatUSD(item.price)}
 												</Col>
-												<Col md={2}>= ${item.qty * item.price}</Col>
+												<Col md={2}>= {formatUSD(item.qty * item.price)}</Col>
 											</Row>
 										</ListGroup.Item>
 									))}
@@ -87,25 +88,25 @@ const PlaceOrderScreen = () => {
 						<ListGroup.Item>
 							<Row>
 								<Col>Items</Col>
-								<Col>${cart.itemsPrice}</Col>
+								<Col>{formatUSD(cart.itemsPrice)}</Col>
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<Row>
 								<Col>Shipping</Col>
-								<Col>${cart.shippingPrice}</Col>
+								<Col>{formatUSD(cart.shippingPrice)}</Col>
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<Row>
 								<Col>Tax</Col>
-								<Col>${cart.taxPrice}</Col>
+								<Col>{formatUSD(cart.taxPrice)}</Col>
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<Row>
 								<Col>Total</Col>
-								<Col>${cart.totalPrice}</Col>
+								<Col>{formatUSD(cart.totalPrice)}</Col>
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item>

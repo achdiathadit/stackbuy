@@ -2,6 +2,7 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Card } from 'react-bootstrap';
 import Rating from './Rating';
+import { formatUSD } from '../helper/formatCurrencyHelper';
 
 const Product = ({ product }) => {
 	return (
@@ -28,7 +29,7 @@ const Product = ({ product }) => {
 					</Card.Text>
 
 					<Card.Text as='h5' className='text-dark fw-bold'>
-						${product.price.toLocaleString()}
+						{formatUSD(product.price)}
 					</Card.Text>
 				</Card.Body>
 			</Card>
