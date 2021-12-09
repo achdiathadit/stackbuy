@@ -1,5 +1,5 @@
 const formatUSD = (num) =>
-	num.toLocaleString(undefined, {
+	Number(num).toLocaleString('en-US', {
 		style: 'currency',
 		currency: 'USD',
 	});
